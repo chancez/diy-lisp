@@ -7,27 +7,16 @@ import (
 )
 
 func main() {
-	program := `
-(define fact
-   ;; Factorial function
-   (lambda (n)
-       (if (eq n 0)
-           1 ; Factorial of 0 is 1, and we deny
-             ; the existence of negative numbers
-           (* n (fact (- n 1))))))
-
-(fact 1 10)
-`
+	program := "(* 100 5)"
 	source := []byte(program)
-	exps, err := lisp.SplitExps(source)
+	// exprs, _ := lisp.SplitExps(source)
+	// for _, v := range exprs {
+	// 	tokens := lisp.Tokenize(v)
+	// 	lisp.PrintRepr(tokens)
+	// }
+	_, err := lisp.Parse(source)
 	if err != nil {
 		fmt.Println(err)
 	}
-	var expList []string
-	for _, v := range exps {
-		atoms := string(v[:])
-		expList = append(expList, atoms)
-	}
-	// Print the list of expressions with each expression as a string
-	fmt.Println(expList)
+
 }
