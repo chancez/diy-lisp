@@ -9,6 +9,8 @@ import (
 
 var (
 	NoBeginParen = errors.New("No beginning paren found")
+	leftParen    = []byte{'('}
+	rightParen   = []byte{')'}
 )
 
 // func Parse(source []byte) []interface{} {
@@ -88,4 +90,10 @@ func SplitExps(source []byte) ([][]byte, error) {
 		exps = append(exps, exp)
 	}
 	return exps, nil
+}
+
+func Tokenize(source []byte) [][]byte {
+	source = bytes.Replace(source, leftParen, []byte("( "), -1)
+	source = bytes.Replace(source, rightParen, []byte(" )"), -1)
+	return bytes.Split(source, []byte(" "))
 }
